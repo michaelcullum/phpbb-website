@@ -1,0 +1,27 @@
+{% extends ':base:base.html.twig' %}
+
+{% block title %}Extensions Rules and Guidelines{% endblock title %}
+
+{% block body %}
+<div id="page-body">
+
+    <ul class="linklist navlinks">
+        <li><a href="{{ home_path }}">Home</a>
+            <strong>&#8249;</strong> <a href="{{ cdb_path }}">Customise phpBB</a>
+            <strong>&#8249;</strong> <a href="{{ extensions_path }}">Extensions</a>
+            <strong>&#8249;</strong> <a href="{{ EXTENSIONS_RULES }}">Rules and Guidelines</a>
+        </li>
+    </ul>
+
+    <div id="main">
+        <h2 class="imgrep mods">Extensions</h2>
+
+        <h2 class="imgrep mod_rules">phpBB Extension Rules</h2>
+       
+    </div>
+
+    <div id="extras">
+        {{ include('PhpbbWebsiteInterfaceBundle:Extensions:menu.html.twig') }}
+    </div>
+</div>
+{% endblock %}

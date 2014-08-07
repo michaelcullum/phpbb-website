@@ -7,3 +7,28 @@ phpBBWebsite_Extensions_rules_and_guidelines:
     path:  /rules-and-guidelines/
     defaults: { _controller: PhpbbWebsiteInterfaceBundle:Extensions:rules }
     methods:  [GET]
+
+phpBBWebsite_Extensions_rules_and_guidelines_general:
+    path:  /rules-and-guidelines/general
+    defaults: { _controller: PhpbbWebsiteInterfaceBundle:Extensions:general }
+    methods:  [GET]
+
+phpBBWebsite_Extensions_rules_and_guidelines_repack:
+    path:  /rules-and-guidelines/repack
+    defaults: { _controller: PhpbbWebsiteInterfaceBundle:Extensions:repack }
+    methods:  [GET]
+
+phpBBWebsite_Extensions_rules_and_guidelines_insta_deny:
+    path:  /rules-and-guidelines/insta-deny
+    defaults: { _controller: PhpbbWebsiteInterfaceBundle:Extensions:instadeny }
+    methods:  [GET]
+
+phpBBWebsite_Extensions_rules_and_guidelines_checklist:
+    path:  /rules-and-guidelines/checklist
+    defaults: { _controller: PhpbbWebsiteInterfaceBundle:Extensions:checklist }
+    methods:  [GET]
+
+phpBBWebsite_Extensions_dev_forum_rules:
+    path: /rules-and-guidelines/development-rules
+    defaults: { _controller: PhpbbWebsiteInerfaceBundle:Extensions:devRules }
+    methods:  [GET]

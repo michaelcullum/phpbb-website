@@ -12,6 +12,7 @@ namespace Phpbb\WebsiteInterfaceBundle\Controller;
 
 use Phpbb\WebsiteInterfaceBundle\Wrappers\PhpbbHandling;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class GlobalController extends Controller
 {
@@ -59,6 +60,53 @@ class GlobalController extends Controller
 		);
 
 		return $this->render('PhpbbWebsiteInterfaceBundle:Global:customise.html.twig', $templateVariables);
+	}
+
+	public function updateAction($action = 'home', $resultId = 0)
+	{
+		$gitUpdater = $this->get('phpbb.utils.gitUpdate');
+
+		if (!$gitUpdater->checkUpdateScriptAuthorisation())
+		{
+			// TODO: Add Response to use statements
+			$this->getResponse()->setStatusCode(Response::HTTP_FORBIDDEN);
+			return $this->render('PhpbbWebsiteInterfaceBundle:Global:authorised.html.twig', array(
+				'authorised' => false,
+				'action'	 => 'update the website'
+			));
+		}
+
+		$templateVariables = array(
+			'header_css_image'      => 'home',
+		);
+
+		$templateVariables += $gitUpdater->getCurrentDetails($root_path);
+
+		switch ($action)
+		{
+			case 'update':
+				$templateVariables += array(
+					'show_progress' => true,
+				);
+
+				$result = $gitUpdater->initiateUpdate();
+
+				break;
+
+			case 'result':
+				if (!$resultId)
+				{
+					$this->createNotFoundException('You should have a result id if you want to get a result');
+				}
+
+				$gitUpdater->setResultId();
+
+				$templateVariable += $gitUpdater->checkForResult();
+
+				break;
+		}
+
+		return $this->render('PhpbbWebsiteInterfaceBundle:Global:update.html.twig', $templateVariables);
 	}
 
 	/**

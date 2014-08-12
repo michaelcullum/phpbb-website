@@ -11,3 +11,9 @@ services:
         class: Phpbb\WebsiteInterfaceBundle\Twig\GlobalsExtension
         tags:
             - { name: twig.extension }
+
+    phpbb.utils.gitUpdate:
+        class: Phpbb\WebsiteInterfaceBundle\Utilities\GitUpdateScript
+        arguments:
+            - %kernel.root_dir%
+            - @swiftmailer.mailer.default

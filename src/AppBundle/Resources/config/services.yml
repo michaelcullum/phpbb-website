@@ -49,3 +49,11 @@ services:
     phpbb.downloadManager:
         class: AppBundle\Utilities\downloadManager
         arguments: [ @phpbb.cache, @kernel ]
+
+    featureFlags:
+        class: AppBundle/FeatureFlags/StaticFeatureFlags
+
+    featureFlagsControllersListener:
+        class: AppBundle\EventListener\FeatureFlagListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelRequest }

@@ -47,9 +47,9 @@ class GlobalController extends Controller
 		$announcements = array_merge($finishedAnnouncements, $blogAnnouncements);
 
 		$templateVariables += array(
-			'homepage'              => true,
+			'homepage'			  => true,
 			'announcements_forum'   => '/community/viewforum.php?f=' . $announcement_forum,
-			'announcements'         => $announcements,);
+			'announcements'		 => $announcements,);
 
 		$content = $this->renderView('AppBundle:Global:index.html.twig', $templateVariables);
 		$response = new Response($content);

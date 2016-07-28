@@ -27,6 +27,15 @@ class ExtensionsController extends Controller
 		$officialExtensions = array();
 
 		$officialExtensions[] = new OfficialExtension(
+			'Auto Groups',
+			'The Auto Groups extension can automate the process of adding and removing users from groups upon reaching specified quantitative milestones related to their post count, age, membership, and warnings count. This allows board administrators to set up special groups that users will automatically be added to (or removed from) based on their activity.',
+			'The Auto Groups extension comes with a handful of user data conditions that can be used to qualify users for automatic group placement. However, this extension was written with extensibility in mind to allow other extension developers to easily add new user data conditions or integrate Auto Groups into their own extensions. For example, an extension that adds new user data, such as "reputation points," could integrate with Auto Groups to allow a user\'s reputation points to be used as a condition for auto group placement. For more information, see the Wiki page at the Auto Groups GitHub repository to find detailed documentation about extending Auto Groups.',
+			'https://www.phpbb.com/customise/db/extension/auto_groups/',
+			'https://github.com/phpbb-extensions/autogroups',
+			'/assets/images/images/extensions/autogroups.png'
+		);
+
+		$officialExtensions[] = new OfficialExtension(
 			'Board Rules',
 			'The Board Rules Extension adds a dedicated Rules page to a board. It offers an ACP module from which an unlimited number of rules and rule categories can be created in each language installed on a board. It also supports sending out notifications to all board members notifying them that the rules have been changed, and can require newly registering users read the board rules as part of the terms of agreement for registering on a board.',
 			'The Board Rules Extension is a fairly advanced design compared to previous phpBB modifications. Abstract classes implemented through interfaces are used to specify the methods that handle most of the code logic. There is an Entity class for manipulating a single rule and an Operator class for manipulating sets of rules. Controller classes are used to process the front-end of the ACP module and the Rules page itself. It also makes use of phpBB\'s new notification system, nestedsets/trees, and AJAX functionality in the ACP user-interface. There is also extensive PHP unit test coverage of the code to ensure its stability and reliability and prevent regressions. We think testing code is so important, we\'ve made it possible for any extension (on Github) to use phpBB\'s PHPUnit testing framework with Travis Continuous Integration hosted servers; just look through our tests and travis files/folders to see how we did it.',
@@ -42,6 +51,15 @@ class ExtensionsController extends Controller
 			'https://www.phpbb.com/customise/db/extension/boardannouncements/',
 			'https://github.com/phpbb-extensions/boardannouncements',
 			'/assets/images/images/extensions/boardannouncements.png'
+		);
+
+		$officialExtensions[] = new OfficialExtension(
+			'Collapsible Forum Categories',
+			'Collapsible Forum Categories is a nice addition to any forum that will allow users to collapse, or hide, any forum or forum category with a simple click. This provides a convenient way for users to minimise the forums they do not particpate in and focus their attention on the forums they do care about. Collapsed forums will remain hidden for logged-in users across different browsers and devices (guests settings are handled via cookies).',
+			'Collpasible Forum Categories can be used in third party extensions. Some extensions that add forum category-like sections to a phpBB board (such as a chatbox, portal or additional topic lists) may want to include collapsibility. The GitHub repository for Collapsible Forum Categories has a Wiki article for adding Collapsible Forum Category support to another extension.',
+			'https://www.phpbb.com/customise/db/extension/collapsible_forum_categories/',
+			'https://github.com/phpbb-extensions/collapsible-categories',
+			'/assets/images/images/extensions/collapsiblecategories.png'
 		);
 
 		$officialExtensions[] = new OfficialExtension(
@@ -117,9 +135,9 @@ class ExtensionsController extends Controller
 			if (!$fail)
 			{
 				$int_output = new HtmlOutput();
-				$output     = new Output($int_output, $debug);
+				$output	 = new Output($int_output, $debug);
 
-				$test                         = new TestStartup($output, TestStartup::TYPE_GITHUB, $github, $debug);
+				$test						 = new TestStartup($output, TestStartup::TYPE_GITHUB, $github, $debug);
 				$templateVariables['results'] = $int_output->getBuffer();
 
 				$result = new EpvResults();

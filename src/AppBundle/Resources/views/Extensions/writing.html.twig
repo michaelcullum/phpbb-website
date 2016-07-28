@@ -25,7 +25,7 @@
 
 		<h2 class="title" id="a-introduction">Introduction</h2>
 		<p>The example detailed below will demonstrate how to write a basic extension that will add a new page to a board that will simply display “Hello world!” or “Goodbye world!” based on the option set in the ACP. This extension touches on all the basic principles that can apply to any other type of extension, including adding a front-controller page, modifying phpBB through core events and template events, modifying the database using migrations, and installing an ACP module with config settings for the extension.</p>
-		<div class="note-box blue"><strong>Note:</strong> The extension referred to in this guide is the Acme Demo Extension by nickvergessen. It can be downloaded from its <a href="https://github.com/nickvergessen/phpbb-ext-acme-demo">Github Repository</a>.<br /><br /><img src="{{ THEME_PATH }}/images/icon-dl-zip.gif" width="20" height="21" style="vertical-align: middle;" alt="Download Extension QuickStart (zip)"> <a href="{{ extension_quickstart_zip }}">Extension QuickStart</a> is an available package with starter <samp>composer.json</samp> and <samp>ext.php</samp> files and the required <samp>license.txt</samp>.</div>
+		<div class="note-box blue"><strong>Note:</strong> The extension referred to in this guide is the Acme Demo Extension by nickvergessen. It can be downloaded from its <a href="https://github.com/nickvergessen/phpbb-ext-acme-demo">Github Repository</a>.<br /><br /><img src="{{ asset('assets/images/images/extensions/skeleton.png') }}" width="20" height="20" style="vertical-align: middle;" alt="Extension Skeleton"> <a href="{{ extension_skeleton }}">Extension Skeleton</a> is a fantastic tool to help developers rapidly generate the starter files and components needed to start developing new extensions for phpBB.</div>
 
 		<hr />
 
@@ -67,6 +67,7 @@
 }</pre>
 		<p>The information in this file will be used by the Extensions Manager. The Extensions Manager is an ACP feature that will allow extensions to be enabled, disabled or purged (meaning any database changes introduced by an extension will be reverted).</p>
 		<div class="note-box blue"><strong>Resources:</strong><br />
+			<a href="{{ extensions_docs_composer }}">Composer Tutorial</a><br />
 			<a href="{{ extensions_wiki_composer }}">Composer &amp; Extension Meta Data Wiki</a><br />
 			<a href="https://getcomposer.org/doc/04-schema.md">Composer Schema</a><br />
 		</div>
@@ -118,11 +119,11 @@ class ext extends \phpbb\extension\base
     acme.demo.controller:
         class: acme\demo\controller\main
         arguments:
-            - @config
-            - @controller.helper
-            - @template
-            - @user</pre>
-		<p>Note that <code class="inline">acme.demo.controller</code> is the unique service name for the <samp>main.php</samp> class. This name can be whatever you want, but phpBB extensions should preface them with the vendor and extension name (in this case, acme.demo) to prevent potential conflicts with other extensions or core services. The class is simply the name-spaced path to the <samp>main.php</samp> file. The arguments are the service dependencies required by the class. It is important that the order of the services listed here exactly match the order of these services as arguments in the <samp>main.php</samp> constructor.</p>
+            - '@config'
+            - '@controller.helper'
+            - '@template'
+            - '@user'</pre>
+		<p>Note that <code class="inline">acme.demo.controller</code> is the unique service name for the <samp>main.php</samp> class. This name can be whatever you want, but phpBB extensions should preface them with the vendor and extension name (in this case, acme.demo) to prevent potential conflicts with other extensions or core services. The class is simply the name-spaced path to the <samp>main.php</samp> file. The arguments are the service dependencies required by the class. It is important that the order of the services listed here exactly match the order of these services as arguments in the <samp>main.php</samp> constructor. It is also recommended that any argument beginning with <code class="inline">@</code> or <code class="inline">%</code> symbols be wrapped in single quotes.</p>
 		<p>Most PHP files in an extension should use the dependency injection model with service definitions, particularly controllers and event listeners. The exceptions to this are any ACP files, language files and migration files (which do not currently use the service container).</p>
 		<div class="note-box blue"><strong>Resources:</strong><br />
 			<a href="{{ extensions_wiki_dependency_injection }}">Dependency Injection Container Wiki</a><br />
@@ -153,6 +154,7 @@ class ext extends \phpbb\extension\base
 		<p>By assigning the above line to a template var in the event listener, the link becomes available for injection into phpBB's nav bar using a template event.</p>
 		<div class="note-box yellow"><strong>Reminder:</strong> All extension service names and route names should be prefixed with your vendor name and extension name.</div>
 		<div class="note-box blue"><strong>Resources:</strong><br />
+			<a href="{{ extensions_docs_controller }}">Controller Tutorial</a><br />
 			<a href="{{ extensions_wiki_controller }}">Controller Wiki</a><br />
 			<a href="http://symfony.com/doc/current/book/routing.html">Symfony: Routing</a><br />
 			<a href="http://symfony.com/doc/2.3/components/routing/introduction.html">Symfony: The Routing Component</a><br />
@@ -243,8 +245,8 @@ $this->user->add_lang_ext(‘acme/demo’, ‘common’);</pre>
 		<pre class="codesnippet">// Add language files common.php and controller.php
 $this->user->add_lang_ext(‘acme/demo’, array(‘common’, ‘controller’));</pre>
 		<p>The above would load the two corresponding language files:<br /><code class="inline">acme/demo/language/en/common.php</code><br /><code class="inline">acme/demo/language/en/controller.php</code></p>
-		<p>While this ability to load language files at any point in your extension’s code when they may be needed is convenient, there are special core events for loading language files too. The <code class="inline">core.user_setup</code> event can be used to load language files that need to be available at all times. And a special <code class="inline">core.permissions</code> event should be used to load a special language file that contains translations for phpBB’s permissions system. For example:</p>
-		<div class="note-box green"><strong>Pro-Tip:</strong> Language files can be given any name. However, language files prefixed with <code class="inline">permissions_</code> or <code class="inline">info_acp_</code> will be auto loaded for permission and ACP module name variables, respectively.</div>
+		<p>It is preferred to use the above method to load language files at any point in your extension’s code execution where the language keys are needed. However, if it is neccessary to load an extension's language keys globally, so they are available at all times, the <code class="inline">core.user_setup</code> event should be used.</p>
+		<div class="note-box green"><strong>Pro-Tip:</strong> Language files can be given any name. However, language files that start with <code class="inline">permissions_</code> or <code class="inline">info_acp_</code> will be automatically loaded within the ACP for permission and ACP module name variables, respectively, and do not need to be loaded using the previously discussed functions or events.</div>
 
 		<hr />
 
@@ -299,6 +301,8 @@ $this->user->add_lang_ext(‘acme/demo’, array(‘common’, ‘controller’)
 			</p>
 		<div class="note-box yellow"><strong>Note:</strong> The INCLUDECSS tag will only work inside the overall_header_head_append event. However, the INCLUDEJS tag can be used in any template event or custom template file.</div>
 		<div class="note-box blue"><strong>Resources:</strong><br />
+			<a href="{{ extensions_docs_php_events }}">PHP Events Tutorial</a><br />
+			<a href="{{ extensions_docs_html_events }}">HTML Events Tutorial</a><br />
 			<a href="{{ extensions_wiki_template_listeners }}">Template Events Wiki</a><br />
 			<a href="{{ extensions_validation_policy }}/#templates">Template Validation Policy</a><br />
 			<a href="{{ extensions_validation_policy }}/#scripts">JavaScript and CSS Validation Policy</a>
@@ -366,10 +370,32 @@ $this->user->add_lang_ext(‘acme/demo’, array(‘common’, ‘controller’)
    return isset($this->config['acme_demo_goodbye']);
 }</pre>
 		<div class="note-box blue"><strong>Resources:</strong><br />
-			<a href="{{ extensions_wiki_migrations }}">Migrations Wiki</a><br />
-			<a href="{{ extensions_wiki_migrations }}/Getting_Started">Getting started with Migrations</a><br />
-			<a href="{{ extensions_wiki_migrations }}/Tools">Migration Tools Wiki</a><br />
+			<a href="{{ extensions_docs_migrations }}">Migrations Documentation</a><br />
+			<a href="{{ extensions_docs_migrations }}getting_started.html">Getting started with Migrations</a><br />
+			<a href="{{ extensions_docs_migrations }}tools/">Migration Tools</a><br />
 			<a href="{{ extensions_validation_policy }}/#migrations">Migrations Validation Policy</a><br />
+		</div>
+
+		<hr />
+
+		<h2 class="title" id="a-permissions">Permissions</h2>
+		<p>Adding new permissions for an extension is an easy three-step process. There are four permission types: Administrator, Moderator, User and Forum (<code class="inline">a_</code>, <code class="inline">m_</code>, <code class="inline">u_</code> and <code class="inline">f_</code>). You can create new permissions for each of these types and assign them to user groups or permission roles. You can also define new roles to assign your permissions to if desired.</p>
+		<p>First, create the permissions in a migration using the <a href="#a-permission-tool">Permissions tool</a>. It helps adding, removing, setting, and unsetting permissions and adding or removing permission roles. For example, to add a new user permission and set it to the registered user group and also add it to the standard user role:</p>
+		<pre class="codesnippet">return array(
+	array('permission.add', array('u_foo_bar')),
+	array('permission.permission_set', array('REGISTERED', 'u_foo_bar', 'group')),
+	array('permission.permission_set', array('ROLE_USER_STANDARD', 'u_foo_bar')),
+);</pre>
+		<p>Next, use the <code class="inline">core.permissions</code> event to hook your new permissions into phpBB's permissions system. All that is required in this event is to add your permission to the event's permission data array. The array uses the permission name as its key with an array assigned to it defining the language key and the category the permission should be displayed in, for example:</p>
+		<pre class="codesnippet">$permissions = $event['permissions'];
+$permissions['u_foo_bar'] = array('lang' => 'ACL_U_FOOBAR', 'cat' => 'misc');
+$event['permissions'] = $permissions;</pre>
+		<p>Finally, you need to define the permission's language key(s). Simply put them in a language file that starts with <code class="inline">permissions_</code>, and they will be automatically loaded within the ACP. For example, the file <code class="inline">permission_foobar.php</code> would contain the following language key definition:</p>
+		<pre class="codesnippet">$lang = array_merge($lang, array(
+	'ACL_U_FOOBAR' => 'Can view foobar',
+));</pre>
+		<div class="note-box blue"><strong>Resources:</strong><br />
+			<a href="{{ extensions_docs_migrations }}tools/permission.html">Migrations Permissions Tool</a><br />
 		</div>
 
 		<hr />
@@ -377,6 +403,7 @@ $this->user->add_lang_ext(‘acme/demo’, array(‘common’, ‘controller’)
 		<h2 class="title" id="a-resources">Additional Resources</h2>
 		<p>We hope you found this extension writing tutorial informative and helpful. There are still many more resources to help you develop great extensions that will expand the possibilities of what phpBB can do for your community and the many more communities that may adopt and benefit from your extensions.</p>
 		<p>
+			<a href="{{ extensions_docs }}">Extensions Tutorials</a><br />
 			<a href="{{ extensions_wiki }}">Extensions Wiki</a><br />
 			<a href="{{ forum_extensions_31x_dev }}">Extensions in Development Forum</a><br />
 			<a href="{{ forum_extensions_31x_writers }}">Extension Writers Forum</a><br />

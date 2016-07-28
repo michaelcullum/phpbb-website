@@ -9,75 +9,75 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EpvResults
 {
-    /**
-     * @var integer
-     */
-    private $id;
+	/**
+	 * @var integer
+	 */
+	private $id;
 
-    /**
-     * @var string
-     */
-    private $github;
+	/**
+	 * @var string
+	 */
+	private $github;
 
-    /**
-     * @var integer
-     */
-    private $runtime;
+	/**
+	 * @var integer
+	 */
+	private $runtime;
 
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	/**
+	 * Get id
+	 *
+	 * @return integer
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 
-    /**
-     * Set github
-     *
-     * @param string $github
-     * @return EpvResults
-     */
-    public function setGithub($github)
-    {
-        $this->github = $github;
+	/**
+	 * Set github
+	 *
+	 * @param string $github
+	 * @return EpvResults
+	 */
+	public function setGithub($github)
+	{
+		$this->github = $github;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get github
-     *
-     * @return string
-     */
-    public function getGithub()
-    {
-        return $this->github;
-    }
+	/**
+	 * Get github
+	 *
+	 * @return string
+	 */
+	public function getGithub()
+	{
+		return $this->github;
+	}
 
-    /**
-     * Set runtime
-     *
-     * @param integer $runtime
-     * @return EpvResults
-     */
-    public function setRuntime($runtime)
-    {
-        $this->runtime = $runtime;
+	/**
+	 * Set runtime
+	 *
+	 * @param integer $runtime
+	 * @return EpvResults
+	 */
+	public function setRuntime($runtime)
+	{
+		$this->runtime = $runtime;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get runtime
-     *
-     * @return integer
-     */
-    public function getRuntime()
-    {
-        return $this->runtime;
-    }
+	/**
+	 * Get runtime
+	 *
+	 * @return integer
+	 */
+	public function getRuntime()
+	{
+		return $this->runtime;
+	}
 }

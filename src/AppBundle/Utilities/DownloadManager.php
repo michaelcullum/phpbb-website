@@ -243,7 +243,7 @@ class DownloadManager
 	 * Get the MD5 or SHA256 hash
 	 *
 	 * @param  string $packageName  Package Filename
-	 * @param  string $url          Url to the package
+	 * @param  string $url		  Url to the package
 	 * @return array 				hash, hashType (md5 or sha356), hashCacheStatus (Hit or Miss)
 	 */
 	private function getHash($packageName, $url)

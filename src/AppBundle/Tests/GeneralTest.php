@@ -14,16 +14,16 @@ namespace AppBundle\Tests;
 
 class GeneralTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGeneral()
-    {
-        $this->assertEquals(1, 1);
-    }
+	public function testGeneral()
+	{
+		$this->assertEquals(1, 1);
+	}
 
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     */
-    public function testFailingInclude()
-    {
-        include 'not_existing_file.php';
-    }
+	/**
+	 * @expectedException PHPUnit_Framework_Error
+	 */
+	public function testFailingInclude()
+	{
+		include 'not_existing_file.php';
+	}
 }
